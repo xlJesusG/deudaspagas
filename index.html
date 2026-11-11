@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeudasPagas - Control Financiero & Deudas</title>
-    <!-- Configuración PWA para pantalla completa y offline -->
+    <!-- Configuración PWA -->
     <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,6 +24,30 @@
             --text-muted: #64748b;
             --border: #e2e8f0;
             --orange: #f59e0b;
+            --rates-bg: #f0f9ff;
+            --rates-border: #bae6fd;
+            --rate-box-bg: #ffffff;
+            --mini-card-bg: #f1f5f9;
+            --calc-bg: #f8fafc;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #60a5fa;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --orange: #fbbf24;
+            --rates-bg: #1e293b;
+            --rates-border: #334155;
+            --rate-box-bg: #0f172a;
+            --mini-card-bg: #334155;
+            --calc-bg: #0f172a;
         }
 
         * {
@@ -37,6 +61,7 @@
             background-color: var(--bg);
             color: var(--text);
             padding-bottom: 90px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         header {
@@ -47,6 +72,7 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .header-brand {
@@ -82,14 +108,15 @@
             letter-spacing: 0.5px;
         }
 
+        /* Sección Tasa del día */
         .header-rates-bar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr) auto;
+            grid-template-columns: repeat(3, 1fr) auto auto auto;
             align-items: center;
-            background: #f0f9ff;
+            background: var(--rates-bg);
             padding: 6px 8px;
             border-radius: 8px;
-            border: 1px solid #bae6fd;
+            border: 1px solid var(--rates-border);
             gap: 4px;
         }
 
@@ -97,6 +124,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            background: var(--rate-box-bg);
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
         }
 
         .rate-label {
@@ -108,14 +139,22 @@
 
         .rate-value-input {
             width: 100%;
-            padding: 3px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            padding: 2px;
+            border: none;
             font-weight: 800;
             font-size: 0.8rem;
             text-align: center;
             color: var(--primary-dark);
-            background: #ffffff;
+            background: transparent;
+            outline: none;
+        }
+
+        .rate-static-value {
+            font-weight: 800;
+            font-size: 0.78rem;
+            color: var(--primary-dark);
+            text-align: center;
+            padding: 2px;
         }
 
         .btn {
@@ -153,24 +192,27 @@
             margin-bottom: 12px;
             border: 1px solid var(--border);
             box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .card.important {
             border-left: 5px solid var(--orange);
-            background: #fffbeb;
+            background: var(--card-bg);
         }
 
         .section-header-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--primary);
             text-transform: uppercase;
-            margin: 12px 0 4px 2px;
-            letter-spacing: 0.5px;
+            margin: 14px 0 6px 2px;
+            letter-spacing: 0.6px;
+            border-left: 3px solid var(--primary);
+            padding-left: 6px;
         }
 
         .mini-summary-card {
-            background: #f1f5f9;
+            background: var(--mini-card-bg);
             border-radius: 8px;
             padding: 8px 12px;
             margin-bottom: 10px;
@@ -183,35 +225,50 @@
         }
 
         .filter-section-title {
-            font-size: 0.7rem;
-            font-weight: bold;
+            font-size: 0.65rem;
+            font-weight: 700;
             color: var(--text-muted);
-            margin-bottom: 2px;
+            margin-bottom: 3px;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .filter-bar {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             overflow-x: auto;
             padding-bottom: 4px;
             margin-bottom: 6px;
+            scrollbar-width: none;
         }
+        .filter-bar::-webkit-scrollbar { display: none; }
 
         .filter-btn {
             white-space: nowrap;
-            padding: 3px 8px;
-            border-radius: 14px;
+            padding: 4px 10px;
+            border-radius: 20px;
             border: 1px solid var(--border);
             background: var(--card-bg);
-            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .filter-btn.active {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+        }
+
+        .minimal-filter-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 10px;
         }
 
         .dashboard-hero {
@@ -279,6 +336,7 @@
             border-top: 1px solid var(--border);
             padding: 8px 0;
             z-index: 100;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .tab-item {
@@ -290,7 +348,7 @@
             cursor: pointer;
             border: none;
             background: none;
-            min-width: 50px;
+            min-width: 45px;
         }
 
         .tab-item.active { color: var(--primary); font-weight: bold; }
@@ -298,12 +356,12 @@
 
         .form-group { margin-bottom: 8px; }
         .form-group label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 2px; }
-        .form-control { width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; background: var(--card-bg); color: var(--text); }
 
         .date-select-group { display: flex; gap: 4px; }
 
         .currency-selector { display: flex; gap: 4px; margin-top: 3px; }
-        .currency-btn { flex: 1; padding: 4px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 6px; cursor: pointer; text-align: center; font-weight: 600; font-size: 0.75rem; }
+        .currency-btn { flex: 1; padding: 4px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); border-radius: 6px; cursor: pointer; text-align: center; font-weight: 600; font-size: 0.75rem; }
         .currency-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         .item-list { display: flex; flex-direction: column; gap: 6px; }
@@ -335,13 +393,96 @@
             max-height: 90vh;
             overflow-y: auto;
             padding: 16px;
+            color: var(--text);
+            border: 1px solid var(--border);
         }
 
         .action-row { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; border-top: 1px dashed var(--border); padding-top: 4px; }
         .hidden { display: none !important; }
+
+        /* Calculadora Estructurada Clásica */
+        .calc-display {
+            width: 100%;
+            background: var(--calc-bg);
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+            font-family: monospace;
+            text-align: right;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            letter-spacing: 1px;
+        }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 8px;
+        }
+        .calc-btn {
+            padding: 14px 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        .calc-btn:active { background: var(--border); }
+        .calc-btn.op { background: var(--rates-bg); color: var(--primary); border-color: var(--border); }
+        .calc-btn.eq { background: var(--primary); color: white; border-color: var(--primary-dark); grid-row: span 3; }
+        .calc-btn.clear { background: #fee2e2; color: var(--danger); border-color: #fca5a5; }
+        .calc-btn.zero { grid-column: span 2; }
+
+        .help-icon-btn {
+            background: var(--rates-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #toastNotification {
+            position: fixed;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #0f172a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 300;
+            pointer-events: none;
+        }
+        #toastNotification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
-<body>
+<body data-theme="light">
+
+    <div id="toastNotification">📋 ¡Acción completada con éxito!</div>
 
     <header>
         <div class="header-brand">
@@ -354,22 +495,23 @@
             </div>
         </div>
         
+        <!-- Tasa del día -->
         <div class="header-rates-bar">
             <div class="rate-box">
-                <span class="rate-label">🇺🇸 USD</span>
+                <span class="rate-label">🇻🇪 1 USD (Bs)</span>
                 <input type="number" id="usdRateInput" step="0.01" class="rate-value-input" onchange="updateRates()">
             </div>
             <div class="rate-box">
-                <span class="rate-label">🪙 USDT</span>
-                <input type="number" id="usdtRateInput" step="0.01" class="rate-value-input" onchange="updateRates()">
+                <span class="rate-label">🇺🇸 Base ($)</span>
+                <div class="rate-static-value">1,00 $</div>
             </div>
             <div class="rate-box">
-                <span class="rate-label">🇪🇺 EUR</span>
-                <input type="number" id="eurRateInput" step="0.01" class="rate-value-input" onchange="updateRates()">
+                <span class="rate-label">💶 Euros (€)</span>
+                <div class="rate-static-value" id="rateEurDisplay">0,85 €</div>
             </div>
-            <button class="btn btn-outline btn-sm" onclick="fetchRateOnline()" title="Sincronizar API" style="padding:4px 6px;">
-                🔄
-            </button>
+            <button class="btn btn-outline btn-sm" onclick="fetchRateOnline()" title="Sincronizar API" style="padding:4px 6px;">🔄</button>
+            <button class="btn btn-outline btn-sm" onclick="toggleTheme()" id="themeToggleBtn" title="Cambiar Modo Nocturno" style="padding:4px 6px;">🌙</button>
+            <button class="help-icon-btn" onclick="openSubModal('currencyHelpModal')" title="Ayuda multimoneda">❓</button>
         </div>
     </header>
 
@@ -401,10 +543,10 @@
                 </div>
             </div>
 
-            <div class="card" style="background:#f8fafc;">
-                <h3 style="font-size:0.85rem; margin-bottom:6px; color:var(--primary);">📈 Análisis Financiero</h3>
+            <div class="card">
+                <h3 style="font-size:0.85rem; margin-bottom:8px; color:var(--primary);">📈 Análisis Financiero</h3>
                 
-                <div style="background:white; padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-bottom:6px;">
+                <div style="background:var(--calc-bg); padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-bottom:8px;">
                     <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Estructura de Deudas Pendientes</div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
                         <span id="analysisDebesUSD" style="font-size:0.8rem; font-weight:bold; color:var(--danger);">$0.00</span>
@@ -412,1547 +554,10 @@
                     </div>
                 </div>
 
-                <div style="background:white; padding:8px 10px; border-radius:8px; border:1px solid var(--border);">
-                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Progreso de Pago</div>
+                <div style="background:var(--calc-bg); padding:8px 10px; border-radius:8px; border:1px solid var(--border); margin-bottom:8px;">
+                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Progreso General de Pago</div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px; font-size:0.75rem; font-weight:bold;">
-                        <span>Devuelto:</span>
+                        <span>Devuelto Histórico:</span>
                         <span id="analysisProgressText" style="color:var(--success);">0%</span>
                     </div>
-                    <div style="width:100%; background:#e2e8f0; height:6px; border-radius:3px; margin-top:4px; overflow:hidden;">
-                        <div id="analysisProgressBar" style="width:0%; background:var(--success); height:100%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB: DEUDAS -->
-        <div id="tab-debts" class="tab-content hidden">
-            <div class="mini-summary-card">
-                <span>Total Pendiente Deudas:</span>
-                <span id="miniDebtTotal" style="color:var(--danger);">$0.00</span>
-            </div>
-
-            <div style="margin-bottom: 10px;">
-                <button class="btn btn-primary" style="width:100%;" onclick="openAddDebtModal()">➕ Registrar Nueva Deuda</button>
-            </div>
-
-            <div class="card" style="padding:10px; background:#f8fafc;">
-                <div style="margin-bottom: 6px;">
-                    <div class="filter-section-title">🔍 Filtro por Abono:</div>
-                    <div id="cutoffFilterBar" class="filter-bar" style="margin-bottom:0;"></div>
-                </div>
-                <div>
-                    <div class="filter-section-title">📅 Filtrar por Mes / Año:</div>
-                    <div style="display:flex; gap:4px;">
-                        <select id="filterMonth" class="form-control" style="padding:4px 6px; font-size:0.8rem;" onchange="renderDebts()">
-                            <option value="ALL">Todos los Meses</option>
-                            <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
-                            <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
-                            <option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option>
-                            <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
-                        </select>
-                        <select id="filterYear" class="form-control" style="padding:4px 6px; font-size:0.8rem; width:85px;" onchange="renderDebts()">
-                            <option value="ALL">Año</option>
-                        </select>
-                        <button class="btn btn-outline btn-sm" onclick="setDashboardCurrentMonth()" style="white-space:nowrap;">Actual</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3 style="font-size:0.9rem; margin-bottom:8px;">Lista de Deudas Pendientes</h3>
-                <div id="debtsList" class="item-list"></div>
-            </div>
-        </div>
-
-        <!-- TAB: INGRESOS -->
-        <div id="tab-income" class="tab-content hidden">
-            <div class="mini-summary-card">
-                <span>Total Ingresos:</span>
-                <span id="miniIncomeTotal" style="color:var(--success);">$0.00</span>
-            </div>
-
-            <div style="margin-bottom: 10px;">
-                <button class="btn btn-success" style="width:100%;" onclick="openAddIncomeModal()">➕ Registrar Nuevo Ingreso</button>
-            </div>
-
-            <div class="card" style="padding:10px; background:#f8fafc;">
-                <div class="filter-section-title">📅 Filtrar Ingresos por Mes y Año:</div>
-                <div style="display:flex; gap:4px;">
-                    <select id="incomeFilterMonth" class="form-control" style="padding:4px 6px; font-size:0.8rem;" onchange="renderIncome()">
-                        <option value="ALL">Todos los Meses</option>
-                        <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
-                        <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
-                        <option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option>
-                        <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
-                    </select>
-                    <select id="incomeFilterYear" class="form-control" style="padding:4px 6px; font-size:0.8rem; width:95px;" onchange="renderIncome()">
-                        <option value="ALL">Todos</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3 style="font-size:0.9rem; margin-bottom:8px;">Lista de Ingresos</h3>
-                <div id="incomeList" class="item-list"></div>
-            </div>
-        </div>
-
-        <!-- TAB: MÁS... -->
-        <div id="tab-settings" class="tab-content hidden">
-            <div class="section-header-title">📇 Agenda y Contactos</div>
-            <div class="card">
-                <button class="btn btn-outline" style="width:100%; justify-content:space-between;" onclick="openSubModal('contactsModal')">
-                    <span>📇 Gestionar Contactos de Pago Móvil</span> ➡️
-                </button>
-            </div>
-
-            <div class="section-header-title">📜 Registros e Historial</div>
-            <div class="card" style="display:flex; flex-direction:column; gap:6px;">
-                <button class="btn btn-outline" style="justify-content:space-between;" onclick="openSubModal('paidModal')">
-                    <span>✅ Ver Deudas Pagadas</span> ➡️
-                </button>
-                <button class="btn btn-outline" style="justify-content:space-between;" onclick="openSubModal('historyModal')">
-                    <span>📜 Ver Historial de Pagos</span> ➡️
-                </button>
-            </div>
-
-            <div class="section-header-title">💾 Reportes y Respaldos</div>
-            <div class="card" style="display:flex; flex-direction:column; gap:8px;">
-                <button class="btn btn-primary" onclick="exportCSV()">📥 Descargar Reporte en Excel (CSV)</button>
-                <button class="btn btn-outline" onclick="downloadJSONBackup()">💾 Descargar Respaldo JSON</button>
-                
-                <div style="border-top:1px dashed var(--border); padding-top:8px;">
-                    <label class="form-group" style="margin-bottom:0;">
-                        <span style="font-size:0.75rem; font-weight:bold;">Restaurar Respaldo JSON:</span>
-                        <input type="file" id="backupFile" accept=".json" class="form-control" style="margin-top:4px; font-size:0.75rem;" onchange="restoreJSONBackup(event)">
-                    </label>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- MODALES Y FORMULARIOS -->
-    <div id="debtModal" class="modal-backdrop">
-        <div class="modal">
-            <h3 id="debtFormTitle" style="font-size:0.95rem; margin-bottom:10px;">Registrar Nueva Deuda</h3>
-            <form id="debtForm" onsubmit="saveDebt(event)">
-                <input type="hidden" id="editingDebtId">
-                <div class="form-group" style="display:flex; align-items:center; gap:6px; background:#fffbeb; padding:6px; border-radius:6px; border:1px solid #fde68a;">
-                    <input type="checkbox" id="isImportant" style="width:16px; height:16px;">
-                    <label for="isImportant" style="margin-bottom:0; cursor:pointer; color:var(--orange); font-weight:bold; font-size:0.8rem;">⚠️ Marcar como Importante</label>
-                </div>
-                <div class="form-group">
-                    <label>Nombre / Persona / Acreedor *</label>
-                    <input type="text" id="debtName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Concepto / Descripción (Opcional)</label>
-                    <input type="text" id="debtConcept" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Monto *</label>
-                    <input type="number" step="0.01" id="debtAmount" class="form-control" oninput="updateLiveBsConversion()" required>
-                    <div style="font-size:0.7rem; color:var(--text-muted); opacity:0.75; margin-top:2px;" id="liveBsConversion">Equivalente: 0.00 Bs</div>
-                    <div class="currency-selector">
-                        <div class="currency-btn active" onclick="setDebtCurrency('USD', this)">USD</div>
-                        <div class="currency-btn" onclick="setDebtCurrency('BS', this)">BS</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>¿Con qué pago vas a cancelar? *</label>
-                    <select id="debtCutoff" class="form-control" required>
-                        <option value="">-- Selecciona fuente o pago --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
-                        <label style="margin-bottom:0;">Fecha Límite</label>
-                        <div style="display:flex; align-items:center; gap:4px; font-size:0.7rem;">
-                            <input type="checkbox" id="noDueDate" style="width:12px; height:12px;" onchange="toggleNoDueDate()">
-                            <label for="noDueDate" style="margin-bottom:0; cursor:pointer;">Sin vencimiento</label>
-                        </div>
-                    </div>
-                    <div class="date-select-group" id="dueDateSelectsContainer">
-                        <select id="debtDay" class="form-control" style="padding:5px; font-size:0.8rem;"></select>
-                        <select id="debtMonth" class="form-control" style="padding:5px; font-size:0.8rem;"></select>
-                        <select id="debtYear" class="form-control" style="padding:5px; font-size:0.8rem;"></select>
-                    </div>
-                </div>
-                <div class="form-group" style="display:flex; align-items:center; gap:6px; margin-top:6px;">
-                    <input type="checkbox" id="hasPaymentMobile" style="width:15px; height:15px;" onchange="togglePmFields()">
-                    <label for="hasPaymentMobile" style="margin-bottom:0; cursor:pointer; font-size:0.8rem;">Añadir datos de Pago Móvil</label>
-                </div>
-                <div id="pmFieldsContainer" class="hidden" style="border:1px solid var(--border); padding:8px; border-radius:6px; margin-bottom:8px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                        <span style="font-size:0.7rem; font-weight:bold; color:var(--text-muted);">Asistente Inteligente:</span>
-                        <div style="display:flex; gap:4px;">
-                            <button type="button" class="btn btn-outline btn-sm" onclick="pastePaymentMobileClipboard('debt')">Pegar</button>
-                            <button type="button" class="btn btn-outline btn-sm" onclick="openContactPickerModal()" title="Seleccionar de Contactos">📇</button>
-                        </div>
-                    </div>
-                    <textarea id="pmManualPasteArea" class="form-control" style="font-size:0.75rem; height:45px; margin-bottom:4px; resize:none;" oninput="processManualPasteText(this.value, 'debt')"></textarea>
-                    <input type="text" id="pmName" class="form-control" style="margin-bottom:3px; font-size:0.8rem;" placeholder="Nombre Titular">
-                    <input type="text" id="pmId" class="form-control" style="margin-bottom:3px; font-size:0.8rem;" placeholder="Cédula / RIF">
-                    <input type="text" id="pmPhone" class="form-control" style="margin-bottom:3px; font-size:0.8rem;" placeholder="Teléfono">
-                    <div style="display:flex; gap:4px; margin-bottom:6px;">
-                        <input type="text" id="pmBank" class="form-control" style="font-size:0.8rem; flex:1;" placeholder="Código Banco">
-                        <select id="bankCatalogSelect" class="form-control" style="font-size:0.8rem; width:110px;" onchange="selectBankFromCatalog(this, 'pmBank')">
-                            <option value="">Banco...</option>
-                        </select>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:6px; background:#f1f5f9; padding:4px 6px; border-radius:4px;">
-                        <input type="checkbox" id="autoSaveContact" style="width:14px; height:14px;">
-                        <label for="autoSaveContact" style="margin-bottom:0; cursor:pointer; font-size:0.75rem;">Guardar automáticamente en Contactos</label>
-                    </div>
-                </div>
-                <div style="display:flex; gap:6px; margin-top:10px;">
-                    <button type="submit" class="btn btn-primary" style="flex:1;" id="debtSubmitBtn">Guardar Deuda</button>
-                    <button type="button" class="btn btn-outline" onclick="closeModal('debtModal')">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- SUB-MODAL CONTACTOS -->
-    <div id="contactsModal" class="modal-backdrop">
-        <div class="modal">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <h3 style="font-size:0.95rem;">📇 Agenda de Contactos Pago Móvil</h3>
-                <button class="btn btn-outline btn-sm" onclick="closeSubModal('contactsModal')">✕</button>
-            </div>
-            <div style="margin-bottom:10px;">
-                <button class="btn btn-success btn-sm" style="width:100%;" onclick="openContactFormModal()">➕ Añadir Nuevo Contacto</button>
-            </div>
-            <div id="contactsList" class="item-list"></div>
-        </div>
-    </div>
-
-    <div id="contactFormModal" class="modal-backdrop">
-        <div class="modal" style="max-width:400px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <h3 id="contactFormTitle" style="font-size:0.9rem;">Nuevo Contacto Pago Móvil</h3>
-                <button type="button" class="btn btn-outline btn-sm" onclick="pastePaymentMobileClipboard('contact')">Pegar</button>
-            </div>
-            <textarea id="contactManualPasteArea" class="form-control" style="font-size:0.75rem; height:45px; margin-bottom:6px; resize:none;" oninput="processManualPasteText(this.value, 'contact')"></textarea>
-            <form onsubmit="saveContact(event)">
-                <input type="hidden" id="editingContactId">
-                <div class="form-group">
-                    <label>Nombre del Contacto *</label>
-                    <input type="text" id="contactName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Cédula / RIF *</label>
-                    <input type="text" id="contactId" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Teléfono *</label>
-                    <input type="text" id="contactPhone" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Banco *</label>
-                    <div style="display:flex; gap:4px;">
-                        <input type="text" id="contactBank" class="form-control" required style="flex:1;">
-                        <select id="contactBankCatalogSelect" class="form-control" style="font-size:0.8rem; width:110px;" onchange="selectBankFromCatalog(this, 'contactBank')">
-                            <option value="">Banco...</option>
-                        </select>
-                    </div>
-                </div>
-                <div style="display:flex; gap:6px; margin-top:10px;">
-                    <button type="submit" class="btn btn-success" style="flex:1;">Guardar Contacto</button>
-                    <button type="button" class="btn btn-outline" onclick="closeModal('contactFormModal')">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="contactPickerModal" class="modal-backdrop">
-        <div class="modal" style="max-width:400px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <h3 style="font-size:0.9rem;">📇 Selecciona un Contacto</h3>
-                <button class="btn btn-outline btn-sm" onclick="closeModal('contactPickerModal')">✕</button>
-            </div>
-            <div id="contactPickerList" class="item-list"></div>
-        </div>
-    </div>
-
-    <!-- INGRESOS -->
-    <div id="incomeModal" class="modal-backdrop">
-        <div class="modal">
-            <h3 id="incomeFormTitle" style="font-size:0.95rem; margin-bottom:10px;">Registrar Ingreso / Abono</h3>
-            <form id="incomeForm" onsubmit="saveIncome(event)">
-                <input type="hidden" id="editingIncomeId">
-                <div class="form-group">
-                    <label>Concepto / Nombre del Abono *</label>
-                    <input type="text" id="incConcept" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Descripción / Detalle (Opcional)</label>
-                    <input type="text" id="incDesc" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Monto *</label>
-                    <input type="number" step="0.01" id="incAmount" class="form-control" required>
-                    <div class="currency-selector">
-                        <div class="currency-btn active" onclick="setIncCurrency('USD', this)">USD</div>
-                        <div class="currency-btn" onclick="setIncCurrency('BS', this)">BS</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Fecha de Cobro *</label>
-                    <div class="date-select-group">
-                        <select id="incDay" class="form-control" style="padding:5px; font-size:0.8rem;"></select>
-                        <select id="incMonth" class="form-control" style="padding:5px; font-size:0.8rem;"></select>
-                        <select id="incYear" class="form-control" style="padding:5px; font-size:0.8rem;"></select>
-                    </div>
-                </div>
-                <div style="display:flex; gap:6px; margin-top:10px;">
-                    <button type="submit" class="btn btn-success" style="flex:1;" id="incomeSubmitBtn">Guardar Ingreso</button>
-                    <button type="button" class="btn btn-outline" onclick="closeModal('incomeModal')">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- SUBMODALES HISTORIAL Y PAGADAS -->
-    <div id="paidModal" class="modal-backdrop">
-        <div class="modal">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <h3 style="font-size:0.95rem;">✅ Historial de Deudas Pagadas</h3>
-                <button class="btn btn-outline btn-sm" onclick="closeSubModal('paidModal')">✕</button>
-            </div>
-            <div class="filter-section-title">🔍 Filtro Abono:</div>
-            <div id="paidCutoffFilterBar" class="filter-bar" style="margin-bottom:6px;"></div>
-            <div id="paidDebtsList" class="item-list"></div>
-        </div>
-    </div>
-
-    <div id="historyModal" class="modal-backdrop">
-        <div class="modal">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <h3 style="font-size:0.95rem;">📜 Historial de Pagos</h3>
-                <button class="btn btn-outline btn-sm" onclick="closeSubModal('historyModal')">✕</button>
-            </div>
-            <div style="display:flex; justify-content:flex-end; margin-bottom:6px;">
-                <button class="btn btn-danger btn-sm" onclick="confirmDeleteAllHistory()">🧹 Limpiar Todo el Historial</button>
-            </div>
-            <div id="historyList" class="item-list"></div>
-        </div>
-    </div>
-
-    <div id="payModal" class="modal-backdrop">
-        <div class="modal">
-            <h3 style="font-size:1rem; margin-bottom:8px;" id="modalDebtTitle">Abonar a Deuda</h3>
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;" id="modalDebtDetails"></p>
-            <form onsubmit="processPayment(event)">
-                <input type="hidden" id="modalDebtId">
-                <div class="form-group" id="quickDebtSelectContainer">
-                    <label>Selecciona la Deuda Pendiente *</label>
-                    <select id="quickPayDebtSelect" class="form-control" required onchange="onQuickDebtSelected()">
-                        <option value="">-- Selecciona una deuda --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>1. Moneda del Pago *</label>
-                    <select id="payCurrency" class="form-control">
-                        <option value="USD">USD ($)</option>
-                        <option value="BS">VES (Bs)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>2. Monto a Pagar *</label>
-                    <input type="number" step="0.01" id="payAmount" class="form-control" required>
-                    <button type="button" class="btn btn-outline btn-sm" style="margin-top:2px;" onclick="fillFullPayment()">Pagar Saldo Completo</button>
-                </div>
-                <div class="form-group">
-                    <label>Número de Referencia / Comprobante</label>
-                    <input type="text" id="payRef" class="form-control">
-                </div>
-                <div class="action-row" style="margin-top:10px; border:none;">
-                    <button type="submit" class="btn btn-success" style="flex:1;">Registrar Pago</button>
-                    <button type="button" class="btn btn-outline" style="flex:1;" onclick="closeModal('payModal')">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="confirmModal" class="modal-backdrop">
-        <div class="modal" style="max-width:300px; text-align:center;">
-            <h3 style="font-size:0.95rem; margin-bottom:6px;">⚠️ Confirmar Acción</h3>
-            <p id="confirmModalText" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;"></p>
-            <div style="display:flex; gap:6px;">
-                <button id="confirmModalYesBtn" class="btn btn-danger" style="flex:1;">Confirmar</button>
-                <button onclick="closeConfirmModal()" class="btn btn-outline" style="flex:1;">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- NAV -->
-    <nav class="nav-tabs">
-        <button class="tab-item active" onclick="switchTab('dashboard', this)">
-            <span>📊</span>Dashboard
-        </button>
-        <button class="tab-item" onclick="switchTab('debts', this)">
-            <span>🔴</span>Deudas
-        </button>
-        <button class="tab-item" onclick="switchTab('income', this)">
-            <span>🟢</span>Ingresos
-        </button>
-        <button class="tab-item" onclick="switchTab('settings', this)">
-            <span>⚙️</span>Más...
-        </button>
-    </nav>
-
-<script>
-    let state = {
-        rateUSD: parseFloat(localStorage.getItem('app_rate_usd')) || 36.50,
-        rateUSDT: parseFloat(localStorage.getItem('app_rate_usdt')) || 36.50,
-        rateEUR: parseFloat(localStorage.getItem('app_rate_eur')) || 39.50,
-        cutoffFilter: 'Todos',
-        paidCutoffFilter: 'Todos',
-        debts: JSON.parse(localStorage.getItem('app_debts')) || [],
-        incomes: JSON.parse(localStorage.getItem('app_incomes')) || [],
-        history: JSON.parse(localStorage.getItem('app_history')) || [],
-        contacts: JSON.parse(localStorage.getItem('app_contacts')) || []
-    };
-
-    let selectedDebtCurrency = 'USD';
-    let selectedIncCurrency = 'USD';
-    let pendingDeleteAction = null;
-
-    const banksListCatalog = [
-        { code: "0102", name: "Banco de Venezuela" },
-        { code: "0105", name: "Banco Mercantil" },
-        { code: "0108", name: "Banco Provincial" },
-        { code: "0114", name: "Bancaribe" },
-        { code: "0115", name: "Banco Exterior" },
-        { code: "0128", name: "Banco Caroní" },
-        { code: "0134", name: "Banesco" },
-        { code: "0138", name: "Banco Sofitasa" },
-        { code: "0151", name: "Fondo Común (BFC)" },
-        { code: "0156", name: "100% Banco" },
-        { code: "0157", name: "Del Sur" },
-        { code: "0163", name: "Banco del Tesoro" },
-        { code: "0166", name: "Banco Agrícola" },
-        { code: "0168", name: "Bancrecer" },
-        { code: "0171", name: "Banco Activo" },
-        { code: "0172", name: "Bancamiga" },
-        { code: "0174", name: "Banplus" },
-        { code: "0175", name: "Banco Bicentenario" },
-        { code: "0177", name: "Banfanb" },
-        { code: "0191", name: "Banco Nacional de Crédito (BNC)" }
-    ];
-
-    const monthsList = [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    ];
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('usdRateInput').value = state.rateUSD;
-        document.getElementById('usdtRateInput').value = state.rateUSDT;
-        document.getElementById('eurRateInput').value = state.rateEUR;
-        
-        populateDateSelects('debtDay', 'debtMonth', 'debtYear');
-        populateDateSelects('incDay', 'incMonth', 'incYear');
-        populateFilterYears();
-        populateBankCatalogSelects();
-        
-        renderAll();
-    });
-
-    function populateBankCatalogSelects() {
-        ['bankCatalogSelect', 'contactBankCatalogSelect'].forEach(id => {
-            const select = document.getElementById(id);
-            if (!select) return;
-            select.innerHTML = '<option value="">Banco...</option>';
-            banksListCatalog.forEach(b => {
-                const opt = document.createElement('option');
-                opt.value = b.code;
-                opt.innerText = `${b.code} - ${b.name}`;
-                select.appendChild(opt);
-            });
-        });
-    }
-
-    function selectBankFromCatalog(sel, targetInputId) {
-        if (sel.value) {
-            document.getElementById(targetInputId).value = sel.value;
-        }
-    }
-
-    function populateFilterYears() {
-        const currentYear = new Date().getFullYear();
-        ['filterYear', 'incomeFilterYear'].forEach(id => {
-            const yearSelect = document.getElementById(id);
-            if (!yearSelect) return;
-            const currentVal = yearSelect.value;
-            yearSelect.innerHTML = `<option value="ALL">${id === 'filterYear' ? 'Año' : 'Todos'}</option>`;
-            for (let y = currentYear - 1; y <= currentYear + 2; y++) {
-                const opt = document.createElement('option');
-                opt.value = y;
-                opt.innerText = y;
-                yearSelect.appendChild(opt);
-            }
-            yearSelect.value = currentVal;
-        });
-    }
-
-    function setDashboardCurrentMonth() {
-        const now = new Date();
-        const m = (now.getMonth() + 1).toString().padStart(2, '0');
-        const y = now.getFullYear().toString();
-        
-        document.getElementById('filterMonth').value = m;
-        document.getElementById('filterYear').value = y;
-        renderDebts();
-    }
-
-    function populateDateSelects(dayId, monthId, yearId) {
-        const daySelect = document.getElementById(dayId);
-        const monthSelect = document.getElementById(monthId);
-        const yearSelect = document.getElementById(yearId);
-
-        if (!daySelect || !monthSelect || !yearSelect) return;
-
-        daySelect.innerHTML = '';
-        monthSelect.innerHTML = '';
-        yearSelect.innerHTML = '';
-
-        const now = new Date();
-        const currentDay = now.getDate();
-        const currentMonth = now.getMonth();
-        const currentYear = now.getFullYear();
-
-        for (let i = 1; i <= 31; i++) {
-            const opt = document.createElement('option');
-            opt.value = i < 10 ? '0' + i : i;
-            opt.innerText = i;
-            if (i === currentDay) opt.selected = true;
-            daySelect.appendChild(opt);
-        }
-
-        monthsList.forEach((m, idx) => {
-            const opt = document.createElement('option');
-            const mVal = idx + 1;
-            opt.value = mVal < 10 ? '0' + mVal : mVal;
-            opt.innerText = m;
-            if (idx === currentMonth) opt.selected = true;
-            monthSelect.appendChild(opt);
-        });
-
-        for (let y = currentYear - 1; y <= currentYear + 2; y++) {
-            const opt = document.createElement('option');
-            opt.value = y;
-            opt.innerText = y;
-            if (y === currentYear) opt.selected = true;
-            yearSelect.appendChild(opt);
-        }
-    }
-
-    function toggleNoDueDate() {
-        const isChecked = document.getElementById('noDueDate').checked;
-        const container = document.getElementById('dueDateSelectsContainer');
-        if (isChecked) container.classList.add('hidden');
-        else container.classList.remove('hidden');
-    }
-
-    function getDateString(dayId, monthId, yearId) {
-        if (document.getElementById('noDueDate') && document.getElementById('noDueDate').checked) {
-            return '';
-        }
-        const d = document.getElementById(dayId).value;
-        const m = document.getElementById(monthId).value;
-        const y = document.getElementById(yearId).value;
-        return `${y}-${m}-${d}`;
-    }
-
-    function setDateSelects(dateStr, dayId, monthId, yearId) {
-        if (!dateStr) {
-            if (document.getElementById('noDueDate')) {
-                document.getElementById('noDueDate').checked = true;
-                toggleNoDueDate();
-            }
-            return;
-        }
-        if (document.getElementById('noDueDate')) {
-            document.getElementById('noDueDate').checked = false;
-            toggleNoDueDate();
-        }
-        const parts = dateStr.split('-');
-        if (parts.length === 3) {
-            document.getElementById(yearId).value = parts[0];
-            document.getElementById(monthId).value = parts[1];
-            document.getElementById(dayId).value = parts[2];
-        }
-    }
-
-    function saveState() {
-        localStorage.setItem('app_rate_usd', state.rateUSD);
-        localStorage.setItem('app_rate_usdt', state.rateUSDT);
-        localStorage.setItem('app_rate_eur', state.rateEUR);
-        localStorage.setItem('app_debts', JSON.stringify(state.debts));
-        localStorage.setItem('app_incomes', JSON.stringify(state.incomes));
-        localStorage.setItem('app_history', JSON.stringify(state.history));
-        localStorage.setItem('app_contacts', JSON.stringify(state.contacts));
-        renderAll();
-    }
-
-    function updateRates() {
-        const usdVal = parseFloat(document.getElementById('usdRateInput').value);
-        const usdtVal = parseFloat(document.getElementById('usdtRateInput').value);
-        const eurVal = parseFloat(document.getElementById('eurRateInput').value);
-        if (usdVal > 0) state.rateUSD = usdVal;
-        if (usdtVal > 0) state.rateUSDT = usdtVal;
-        if (eurVal > 0) state.rateEUR = eurVal;
-        saveState();
-    }
-
-    async function fetchRateOnline() {
-        try {
-            const res = await fetch('https://open.er-api.com/v6/latest/USD');
-            const data = await res.json();
-            if (data && data.rates && data.rates.VES) {
-                state.rateUSD = parseFloat(data.rates.VES.toFixed(2));
-                state.rateUSDT = state.rateUSD;
-                document.getElementById('usdRateInput').value = state.rateUSD;
-                document.getElementById('usdtRateInput').value = state.rateUSDT;
-                saveState();
-                alert('Tasas sincronizadas con éxito.');
-            }
-        } catch (e) {
-            alert('No se pudo conectar a la API.');
-        }
-    }
-
-    function switchTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
-        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-        if (btn) btn.classList.add('active');
-    }
-
-    function openSubModal(modalId) {
-        document.getElementById(modalId).style.display = 'flex';
-        renderPaidDebts();
-        renderHistory();
-        renderContactsList();
-    }
-
-    function closeSubModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-    }
-
-    function openModal(modalId) {
-        document.getElementById(modalId).style.display = 'flex';
-    }
-
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-    }
-
-    function openAddDebtModal() {
-        document.getElementById('debtForm').reset();
-        document.getElementById('editingDebtId').value = '';
-        document.getElementById('debtFormTitle').innerText = 'Registrar Nueva Deuda';
-        document.getElementById('debtSubmitBtn').innerText = 'Guardar Deuda';
-        document.getElementById('pmFieldsContainer').classList.add('hidden');
-        document.getElementById('noDueDate').checked = false;
-        toggleNoDueDate();
-        populateDateSelects('debtDay', 'debtMonth', 'debtYear');
-        updateCutoffDropdown();
-        updateLiveBsConversion();
-        openModal('debtModal');
-    }
-
-    function openAddIncomeModal() {
-        document.getElementById('incomeForm').reset();
-        document.getElementById('editingIncomeId').value = '';
-        document.getElementById('incomeFormTitle').innerText = 'Registrar Ingreso / Abono';
-        document.getElementById('incomeSubmitBtn').innerText = 'Guardar Ingreso';
-        populateDateSelects('incDay', 'incMonth', 'incYear');
-        openModal('incomeModal');
-    }
-
-    function openContactFormModal() {
-        document.getElementById('contactFormModal').style.display = 'flex';
-        document.getElementById('editingContactId').value = '';
-        document.getElementById('contactFormTitle').innerText = 'Nuevo Contacto Pago Móvil';
-        document.getElementById('contactName').value = '';
-        document.getElementById('contactId').value = '';
-        document.getElementById('contactPhone').value = '';
-        document.getElementById('contactBank').value = '';
-        document.getElementById('contactManualPasteArea').value = '';
-    }
-
-    function openContactPickerModal() {
-        const container = document.getElementById('contactPickerList');
-        if (!container) return;
-        container.innerHTML = '';
-
-        if (state.contacts.length === 0) {
-            container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">No hay contactos guardados en la agenda.</p>';
-        } else {
-            state.contacts.forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.style.cursor = 'pointer';
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <strong>📇 ${c.name}</strong>
-                        <span style="font-size:0.75rem; color:var(--primary); font-weight:bold;">Seleccionar ➡️</span>
-                    </div>
-                    <div style="font-size:0.7rem; color:var(--text-muted);">CI/RIF: ${c.id} | Tel: ${c.phone} | Banco: ${c.bank}</div>
-                `;
-                div.onclick = () => {
-                    document.getElementById('pmName').value = c.name;
-                    document.getElementById('pmId').value = c.id;
-                    document.getElementById('pmPhone').value = c.phone;
-                    document.getElementById('pmBank').value = c.bank;
-                    closeModal('contactPickerModal');
-                };
-                container.appendChild(div);
-            });
-        }
-        document.getElementById('contactPickerModal').style.display = 'flex';
-    }
-
-    function checkDuplicateContact(name, id, bank) {
-        return state.contacts.find(c => 
-            c.id.toLowerCase() === id.toLowerCase() && 
-            c.bank === bank && 
-            c.name.toLowerCase() === name.toLowerCase()
-        );
-    }
-
-    function saveContact(e) {
-        e.preventDefault();
-        const editingId = document.getElementById('editingContactId').value;
-        const name = document.getElementById('contactName').value.trim();
-        const id = document.getElementById('contactId').value.trim();
-        const phone = document.getElementById('contactPhone').value.trim();
-        const bank = document.getElementById('contactBank').value.trim();
-
-        const duplicate = checkDuplicateContact(name, id, bank);
-        if (duplicate && duplicate.id_contact !== editingId) {
-            if (!confirm(`El contacto "${name}" con la misma cédula (${id}) y banco (${bank}) ya existe. ¿Deseas actualizarlo/continuar?`)) {
-                return;
-            }
-        }
-
-        if (editingId) {
-            const contact = state.contacts.find(c => c.id_contact === editingId);
-            if (contact) {
-                contact.name = name;
-                contact.id = id;
-                contact.phone = phone;
-                contact.bank = bank;
-            }
-        } else if (duplicate) {
-            duplicate.name = name;
-            duplicate.phone = phone;
-        } else {
-            state.contacts.push({
-                id_contact: 'contact_' + Date.now(),
-                name, id, phone, bank
-            });
-        }
-
-        saveState();
-        closeModal('contactFormModal');
-        renderContactsList();
-        alert('Contacto guardado con éxito.');
-    }
-
-    function editContact(idContact) {
-        const c = state.contacts.find(x => x.id_contact === idContact);
-        if (!c) return;
-        document.getElementById('editingContactId').value = c.id_contact;
-        document.getElementById('contactFormTitle').innerText = 'Editar Contacto';
-        document.getElementById('contactName').value = c.name;
-        document.getElementById('contactId').value = c.id;
-        document.getElementById('contactPhone').value = c.phone;
-        document.getElementById('contactBank').value = c.bank;
-        document.getElementById('contactManualPasteArea').value = '';
-        document.getElementById('contactFormModal').style.display = 'flex';
-    }
-
-    function renderContactsList() {
-        const container = document.getElementById('contactsList');
-        if (!container) return;
-        container.innerHTML = '';
-
-        if (state.contacts.length === 0) {
-            container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">No hay contactos de pago móvil registrados.</p>';
-            return;
-        }
-
-        state.contacts.forEach(c => {
-            const div = document.createElement('div');
-            div.className = 'list-item';
-            div.innerHTML = `
-                <div class="list-item-header">
-                    <div>
-                        <strong>📇 ${c.name}</strong>
-                        <div style="font-size:0.7rem; color:var(--text-muted);">CI/RIF: ${c.id} | Tel: ${c.phone} | Banco: ${c.bank}</div>
-                    </div>
-                </div>
-                <div class="action-row" style="display:flex; justify-content:flex-end; gap:4px;">
-                    <button class="btn btn-warning btn-sm" onclick="editContact('${c.id_contact}')">✏️ Editar</button>
-                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('contact', '${c.id_contact}', '${c.name}')">🗑️ Borrar</button>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function setCutoffFilter(cutoff, btn) {
-        state.cutoffFilter = cutoff;
-        btn.parentElement.querySelectorAll('.filter-btn').forEach(el => el.classList.remove('active'));
-        btn.classList.add('active');
-        renderDebts();
-    }
-
-    function setPaidCutoffFilter(cutoff, btn) {
-        state.paidCutoffFilter = cutoff;
-        btn.parentElement.querySelectorAll('.filter-btn').forEach(el => el.classList.remove('active'));
-        btn.classList.add('active');
-        renderPaidDebts();
-    }
-
-    function togglePmFields() {
-        const checked = document.getElementById('hasPaymentMobile').checked;
-        const container = document.getElementById('pmFieldsContainer');
-        if (checked) container.classList.remove('hidden');
-        else container.classList.add('hidden');
-    }
-
-    function updateLiveBsConversion() {
-        const val = parseFloat(document.getElementById('debtAmount').value) || 0;
-        const amountUSD = convertToUSD(val, selectedDebtCurrency);
-        const bsVal = amountUSD * state.rateUSD;
-        document.getElementById('liveBsConversion').innerText = `Equivalente: ${bsVal.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs`;
-    }
-
-    function processManualPasteText(text, targetType) {
-        if (!text) return;
-        const phoneRegex = /(0414|0422|0416|0412|0424|0426)\d{7}/;
-        const bankRegex = /\b\d{4}\b/;
-        const rifCedulaRegex = /\b([VVEJGP])?\d{7,9}\b/i;
-        const amountRegex = /\d+[\.,]\d{2}/;
-
-        const matchPhone = text.match(phoneRegex);
-        const matchBank = text.match(bankRegex);
-        const matchId = text.match(rifCedulaRegex);
-        const matchAmount = text.match(amountRegex);
-
-        if (targetType === 'debt') {
-            if (matchPhone) document.getElementById('pmPhone').value = matchPhone[0];
-            if (matchBank) document.getElementById('pmBank').value = matchBank[0];
-            if (matchId) document.getElementById('pmId').value = matchId[0];
-            if (matchAmount) {
-                const amt = matchAmount[0].replace(',', '.');
-                document.getElementById('debtAmount').value = amt;
-                updateLiveBsConversion();
-            }
-        } else if (targetType === 'contact') {
-            if (matchPhone) document.getElementById('contactPhone').value = matchPhone[0];
-            if (matchBank) document.getElementById('contactBank').value = matchBank[0];
-            if (matchId) document.getElementById('contactId').value = matchId[0];
-        }
-    }
-
-    async function pastePaymentMobileClipboard(targetType) {
-        try {
-            const text = await navigator.clipboard.readText();
-            if (!text) {
-                alert('El portapapeles está vacío.');
-                return;
-            }
-            if (targetType === 'debt') {
-                document.getElementById('pmManualPasteArea').value = text;
-            } else {
-                document.getElementById('contactManualPasteArea').value = text;
-            }
-            processManualPasteText(text, targetType);
-            alert('Datos pegados con éxito.');
-        } catch (err) {
-            alert('Pega el texto directamente en el cuadro de texto.');
-        }
-    }
-
-    function toggleDetails(id) {
-        const details = document.getElementById('details_' + id);
-        details.classList.toggle('hidden');
-    }
-
-    function convertToUSD(amount, currency) {
-        if (currency === 'USD') return amount;
-        if (currency === 'BS') return amount / state.rateUSD;
-        return amount;
-    }
-
-    function convertFromUSD(amountUSD, targetCurrency) {
-        if (targetCurrency === 'USD') return amountUSD;
-        if (targetCurrency === 'BS') return amountUSD * state.rateUSD;
-        return amountUSD;
-    }
-
-    function formatCurr(amountUSD) {
-        return `$ ${amountUSD.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    }
-
-    function formatBs(amountUSD) {
-        const val = amountUSD * state.rateUSD;
-        return `${val.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs`;
-    }
-
-    function renderAll() {
-        updateCutoffDropdown();
-        updateCutoffFilters();
-        renderDashboard();
-        renderDebts();
-        renderPaidDebts();
-        renderIncome();
-        renderHistory();
-        renderContactsList();
-        renderMiniTotals();
-        renderFinancialAnalysis();
-    }
-
-    function renderMiniTotals() {
-        const totalDebtUSD = state.debts.filter(d => (d.totalUSD - d.paidUSD) > 0).reduce((acc, d) => acc + (d.totalUSD - d.paidUSD), 0);
-        const totalIncomeUSD = state.incomes.reduce((acc, i) => acc + i.amountUSD, 0);
-
-        const miniDebtEl = document.getElementById('miniDebtTotal');
-        const miniIncEl = document.getElementById('miniIncomeTotal');
-        if (miniDebtEl) miniDebtEl.innerText = formatCurr(totalDebtUSD);
-        if (miniIncEl) miniIncEl.innerText = formatCurr(totalIncomeUSD);
-    }
-
-    function renderFinancialAnalysis() {
-        const totalDebtUSD = state.debts.reduce((acc, d) => acc + d.totalUSD, 0);
-        const totalPaidUSD = state.debts.reduce((acc, d) => acc + d.paidUSD, 0);
-        const pendingDebtUSD = totalDebtUSD - totalPaidUSD;
-
-        document.getElementById('analysisDebesUSD').innerText = formatCurr(pendingDebtUSD);
-        document.getElementById('analysisDebesBs').innerText = formatBs(pendingDebtUSD);
-
-        let progressPercent = 0;
-        if (totalDebtUSD > 0) {
-            progressPercent = Math.round((totalPaidUSD / totalDebtUSD) * 100);
-        }
-        document.getElementById('analysisProgressText').innerText = `${progressPercent}%`;
-        document.getElementById('analysisProgressBar').style.width = `${progressPercent}%`;
-    }
-
-    function updateCutoffDropdown() {
-        const select = document.getElementById('debtCutoff');
-        const currentVal = select ? select.value : '';
-        if (!select) return;
-        
-        select.innerHTML = '<option value="">-- Selecciona fuente o pago --</option>';
-        
-        const optOtros = document.createElement('option');
-        optOtros.value = 'Otros';
-        optOtros.innerText = 'Otros (Sin fuente fija)';
-        select.appendChild(optOtros);
-
-        state.incomes.forEach(i => {
-            const opt = document.createElement('option');
-            opt.value = i.concept;
-            opt.innerText = `${i.concept} (${formatCurr(i.amountUSD)})`;
-            select.appendChild(opt);
-        });
-
-        if (currentVal) select.value = currentVal;
-    }
-
-    function updateCutoffFilters() {
-        const cutoffs = new Set(['Otros']);
-        state.incomes.forEach(i => { if (i.concept) cutoffs.add(i.concept); });
-        state.debts.forEach(d => { if (d.cutoff) cutoffs.add(d.cutoff); });
-
-        const list = ['Todos', ...Array.from(cutoffs)];
-
-        const cutoffBar = document.getElementById('cutoffFilterBar');
-        if (cutoffBar) {
-            cutoffBar.innerHTML = '';
-            list.forEach(c => {
-                const btn = document.createElement('button');
-                btn.className = `filter-btn ${state.cutoffFilter === c ? 'active' : ''}`;
-                btn.innerText = c;
-                btn.onclick = () => setCutoffFilter(c, btn);
-                cutoffBar.appendChild(btn);
-            });
-        }
-
-        const paidBar = document.getElementById('paidCutoffFilterBar');
-        if (paidBar) {
-            paidBar.innerHTML = '';
-            list.forEach(c => {
-                const btn = document.createElement('button');
-                btn.className = `filter-btn ${state.paidCutoffFilter === c ? 'active' : ''}`;
-                btn.innerText = c;
-                btn.onclick = () => setPaidCutoffFilter(c, btn);
-                paidBar.appendChild(btn);
-            });
-        }
-    }
-
-    function renderDashboard() {
-        const totalIncomeUSD = state.incomes.reduce((acc, i) => acc + i.amountUSD, 0);
-        const totalDebtUSD = state.debts.filter(d => (d.totalUSD - d.paidUSD) > 0).reduce((acc, d) => acc + (d.totalUSD - d.paidUSD), 0);
-        const netUSD = totalIncomeUSD - totalDebtUSD;
-
-        document.getElementById('dashIncome').innerText = formatCurr(totalIncomeUSD);
-        document.getElementById('dashIncomeBs').innerText = formatBs(totalIncomeUSD);
-        document.getElementById('dashDebt').innerText = formatCurr(totalDebtUSD);
-        document.getElementById('dashDebtBs').innerText = formatBs(totalDebtUSD);
-        document.getElementById('dashNet').innerText = formatCurr(netUSD);
-        document.getElementById('dashNetBs').innerText = formatBs(netUSD);
-    }
-
-    function renderDebts() {
-        const container = document.getElementById('debtsList');
-        if (!container) return;
-        container.innerHTML = '';
-
-        const mFilter = document.getElementById('filterMonth').value;
-        const yFilter = document.getElementById('filterYear').value;
-
-        const pendingDebts = state.debts.filter(d => {
-            const pending = d.totalUSD - d.paidUSD;
-            if (pending <= 0) return false;
-            if (state.cutoffFilter !== 'Todos' && d.cutoff !== state.cutoffFilter) return false;
-
-            if (d.dueDate) {
-                const parts = d.dueDate.split('-');
-                const y = parts[0];
-                const m = parts[1];
-                if (mFilter !== 'ALL' && m !== mFilter) return false;
-                if (yFilter !== 'ALL' && y !== yFilter) return false;
-            } else if (mFilter !== 'ALL' || yFilter !== 'ALL') {
-                return false;
-            }
-
-            return true;
-        });
-
-        if (pendingDebts.length === 0) {
-            container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">No hay deudas pendientes con este filtro.</p>';
-            return;
-        }
-
-        pendingDebts.forEach(d => {
-            const pendingUSD = d.totalUSD - d.paidUSD;
-            const div = document.createElement('div');
-            div.className = `list-item ${d.isImportant ? 'important' : ''}`;
-            div.innerHTML = `
-                <div class="list-item-header" onclick="toggleDetails('${d.id}')">
-                    <div>
-                        <strong>${d.isImportant ? '⚠️ ' : ''}${d.name}</strong> ${d.concept ? '- ' + d.concept : ''}
-                        <div style="font-size:0.7rem; color:var(--text-muted);">Abono: ${d.cutoff || 'General'} | Vence: ${d.dueDate || 'Sin vencimiento'} 🔽</div>
-                    </div>
-                    <span class="badge badge-pending">${formatCurr(pendingUSD)}</span>
-                </div>
-
-                <div id="details_${d.id}" class="hidden" style="margin-top:6px;">
-                    <div style="font-size:0.8rem; margin-bottom:6px;">
-                        Total: ${formatCurr(d.totalUSD)} | Pagado: ${formatCurr(d.paidUSD)}<br>
-                        <strong>Pendiente: ${formatCurr(pendingUSD)} (${formatBs(pendingUSD)})</strong>
-                    </div>
-                    <div class="action-row">
-                        <button class="btn btn-primary btn-sm" onclick="openPayModal('${d.id}')">💳 Pagar</button>
-                        <button class="btn btn-warning btn-sm" onclick="editDebt('${d.id}')">✏️ Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('debt', '${d.id}', '${d.name}')">🗑️ Borrar</button>
-                        ${d.paymentMobile ? `<button class="btn btn-outline btn-sm" style="width:100%; margin-top:3px;" onclick="copyPaymentMobile('${d.id}')">📋 Copiar Pago Móvil</button>` : ''}
-                    </div>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function renderPaidDebts() {
-        const container = document.getElementById('paidDebtsList');
-        if (!container) return;
-        container.innerHTML = '';
-        
-        const paidDebts = state.debts.filter(d => {
-            if ((d.totalUSD - d.paidUSD) > 0) return false;
-            if (state.paidCutoffFilter !== 'Todos' && d.cutoff !== state.paidCutoffFilter) return false;
-            return true;
-        });
-
-        if (paidDebts.length === 0) {
-            container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">No hay deudas pagadas en este filtro.</p>';
-            return;
-        }
-
-        paidDebts.forEach(d => {
-            const div = document.createElement('div');
-            div.className = 'list-item';
-            div.style.borderLeft = '4px solid var(--success)';
-            div.innerHTML = `
-                <div class="list-item-header">
-                    <div>
-                        <strong>✅ ${d.name}</strong> ${d.concept ? '- ' + d.concept : ''}
-                        <div style="font-size:0.7rem; color:var(--text-muted);">Abono: ${d.cutoff || 'General'} | Saldado</div>
-                    </div>
-                    <span class="badge badge-paid">Pagado</span>
-                </div>
-                <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
-                    <span>Original: ${formatCurr(d.totalUSD)}</span>
-                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('debt', '${d.id}', '${d.name}')">🗑️ Eliminar</button>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function renderIncome() {
-        const container = document.getElementById('incomeList');
-        if (!container) return;
-        container.innerHTML = '';
-
-        const mFilter = document.getElementById('incomeFilterMonth') ? document.getElementById('incomeFilterMonth').value : 'ALL';
-        const yFilter = document.getElementById('incomeFilterYear') ? document.getElementById('incomeFilterYear').value : 'ALL';
-
-        const filteredIncomes = state.incomes.filter(i => {
-            if (i.date) {
-                const parts = i.date.split('-');
-                const y = parts[0];
-                const m = parts[1];
-                if (mFilter !== 'ALL' && m !== mFilter) return false;
-                if (yFilter !== 'ALL' && y !== yFilter) return false;
-            } else if (mFilter !== 'ALL' || yFilter !== 'ALL') {
-                return false;
-            }
-            return true;
-        });
-
-        if (filteredIncomes.length === 0) {
-            container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">No hay ingresos con este filtro.</p>';
-            return;
-        }
-
-        filteredIncomes.forEach(i => {
-            const bsEquivalent = i.amountUSD * state.rateUSD;
-            const div = document.createElement('div');
-            div.className = 'list-item income-item-compact';
-            div.style.borderLeft = '4px solid var(--success)';
-            div.innerHTML = `
-                <div class="list-item-header">
-                    <div>
-                        <strong>🟢 ${i.concept}</strong> ${i.description ? '(' + i.description + ')' : ''}
-                        <div style="font-size:0.65rem; color:var(--text-muted);">Fecha: ${i.date}</div>
-                    </div>
-                    <div style="text-align:right;">
-                        <strong style="font-size:0.85rem;">${formatCurr(i.amountUSD)}</strong>
-                        <div style="font-size:0.65rem; color:var(--success); font-weight:bold;">${bsEquivalent.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2})} Bs</div>
-                    </div>
-                </div>
-                <div class="action-row" style="display:flex; justify-content:flex-end; gap:4px;">
-                    <button class="btn btn-warning btn-sm" style="padding:2px 6px; font-size:0.7rem;" onclick="editIncome('${i.id}')">✏️ Editar</button>
-                    <button class="btn btn-danger btn-sm" style="padding:2px 6px; font-size:0.7rem;" onclick="confirmDelete('income', '${i.id}', '${i.concept}')">🗑️ Borrar</button>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function renderHistory() {
-        const container = document.getElementById('historyList');
-        if (!container) return;
-        container.innerHTML = '';
-        if (state.history.length === 0) {
-            container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center;">Sin historial de pagos.</p>';
-            return;
-        }
-        state.history.forEach(h => {
-            const div = document.createElement('div');
-            div.className = 'list-item';
-            div.innerHTML = `
-                <div class="list-item-header">
-                    <div>
-                        <strong>Pago a: ${h.debtName}</strong>
-                        <div style="font-size:0.7rem; color:var(--text-muted);">Fecha: ${h.date} | Ref: ${h.ref || 'N/A'}</div>
-                    </div>
-                    <span class="badge badge-paid">${formatCurr(h.amountUSD)}</span>
-                </div>
-                <div style="display:flex; justify-content:flex-end; margin-top:3px;">
-                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('history', '${h.id}', 'este pago')">🗑️ Eliminar</button>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function setDebtCurrency(curr, btn) {
-        selectedDebtCurrency = curr;
-        btn.parentElement.querySelectorAll('.currency-btn').forEach(el => el.classList.remove('active'));
-        btn.classList.add('active');
-        updateLiveBsConversion();
-    }
-
-    function setIncCurrency(curr, btn) {
-        selectedIncCurrency = curr;
-        btn.parentElement.querySelectorAll('.currency-btn').forEach(el => el.classList.remove('active'));
-        btn.classList.add('active');
-    }
-
-    function saveDebt(e) {
-        e.preventDefault();
-        const editingId = document.getElementById('editingDebtId').value;
-        const name = document.getElementById('debtName').value.trim();
-        const concept = document.getElementById('debtConcept').value.trim();
-        const rawAmount = parseFloat(document.getElementById('debtAmount').value);
-        const cutoff = document.getElementById('debtCutoff').value;
-        const dueDate = getDateString('debtDay', 'debtMonth', 'debtYear');
-        const isImportant = document.getElementById('isImportant').checked;
-
-        const hasPm = document.getElementById('hasPaymentMobile').checked;
-        let paymentMobile = null;
-        
-        if (hasPm) {
-            const pmNameVal = document.getElementById('pmName').value.trim() || name;
-            const pmIdVal = document.getElementById('pmId').value.trim();
-            const pmPhoneVal = document.getElementById('pmPhone').value.trim();
-            const pmBankVal = document.getElementById('pmBank').value.trim();
-
-            paymentMobile = {
-                name: pmNameVal,
-                id: pmIdVal,
-                phone: pmPhoneVal,
-                bank: pmBankVal
-            };
-
-            const autoSave = document.getElementById('autoSaveContact').checked;
-            if (autoSave && pmIdVal && pmBankVal) {
-                const duplicate = checkDuplicateContact(pmNameVal, pmIdVal, pmBankVal);
-                if (duplicate) {
-                    duplicate.name = pmNameVal;
-                    duplicate.phone = pmPhoneVal;
-                } else {
-                    state.contacts.push({
-                        id_contact: 'contact_' + Date.now(),
-                        name: pmNameVal,
-                        id: pmIdVal,
-                        phone: pmPhoneVal,
-                        bank: pmBankVal
-                    });
-                }
-            }
-        }
-
-        const amountUSD = convertToUSD(rawAmount, selectedDebtCurrency);
-
-        if (editingId) {
-            const debt = state.debts.find(d => d.id === editingId);
-            if (debt) {
-                debt.name = name;
-                debt.concept = concept;
-                debt.totalUSD = amountUSD;
-                debt.cutoff = cutoff;
-                debt.dueDate = dueDate;
-                debt.isImportant = isImportant;
-                debt.paymentMobile = paymentMobile;
-            }
-        } else {
-            state.debts.push({
-                id: 'debt_' + Date.now(),
-                name, concept, totalUSD: amountUSD, paidUSD: 0, cutoff, dueDate, isImportant, paymentMobile
-            });
-        }
-
-        saveState();
-        closeModal('debtModal');
-        alert('Deuda guardada correctamente.');
-    }
-
-    function editDebt(id) {
-        const debt = state.debts.find(d => d.id === id);
-        if (!debt) return;
-
-        document.getElementById('editingDebtId').value = debt.id;
-        document.getElementById('debtName').value = debt.name;
-        document.getElementById('debtConcept').value = debt.concept || '';
-        document.getElementById('debtAmount').value = debt.totalUSD.toFixed(2);
-        selectedDebtCurrency = 'USD';
-        document.querySelectorAll('.currency-btn')[0].classList.add('active');
-        document.querySelectorAll('.currency-btn')[1].classList.remove('active');
-        updateLiveBsConversion();
-
-        updateCutoffDropdown();
-        document.getElementById('debtCutoff').value = debt.cutoff || '';
-        setDateSelects(debt.dueDate, 'debtDay', 'debtMonth', 'debtYear');
-        document.getElementById('isImportant').checked = debt.isImportant || false;
-
-        if (debt.paymentMobile) {
-            document.getElementById('hasPaymentMobile').checked = true;
-            document.getElementById('pmFieldsContainer').classList.remove('hidden');
-            document.getElementById('pmName').value = debt.paymentMobile.name || '';
-            document.getElementById('pmId').value = debt.paymentMobile.id || '';
-            document.getElementById('pmPhone').value = debt.paymentMobile.phone || '';
-            document.getElementById('pmBank').value = debt.paymentMobile.bank || '';
-        } else {
-            document.getElementById('hasPaymentMobile').checked = false;
-            document.getElementById('pmFieldsContainer').classList.add('hidden');
-        }
-
-        document.getElementById('debtFormTitle').innerText = 'Editar Deuda';
-        document.getElementById('debtSubmitBtn').innerText = 'Actualizar Deuda';
-        openModal('debtModal');
-    }
-
-    function saveIncome(e) {
-        e.preventDefault();
-        const editingId = document.getElementById('editingIncomeId').value;
-        const concept = document.getElementById('incConcept').value.trim();
-        const description = document.getElementById('incDesc').value.trim();
-        const rawAmount = parseFloat(document.getElementById('incAmount').value);
-        const date = getDateString('incDay', 'incMonth', 'incYear');
-        const amountUSD = convertToUSD(rawAmount, selectedIncCurrency);
-
-        if (editingId) {
-            const inc = state.incomes.find(i => i.id === editingId);
-            if (inc) {
-                inc.concept = concept;
-                inc.description = description;
-                inc.amountUSD = amountUSD;
-                inc.date = date;
-            }
-        } else {
-            state.incomes.push({ id: 'inc_' + Date.now(), concept, description, amountUSD, date });
-        }
-
-        saveState();
-        closeModal('incomeModal');
-        alert('Ingreso guardado.');
-    }
-
-    function editIncome(id) {
-        const inc = state.incomes.find(i => i.id === id);
-        if (!inc) return;
-
-        document.getElementById('editingIncomeId').value = inc.id;
-        document.getElementById('incConcept').value = inc.concept;
-        document.getElementById('incDesc').value = inc.description || '';
-        document.getElementById('incAmount').value = inc.amountUSD.toFixed(2);
-        setDateSelects(inc.date, 'incDay', 'incMonth', 'incYear');
-
-        document.getElementById('incomeFormTitle').innerText = 'Editar Ingreso';
-        document.getElementById('incomeSubmitBtn').innerText = 'Actualizar Ingreso';
-        openModal('incomeModal');
-    }
-
-    function openQuickPayModal() {
-        const select = document.getElementById('quickPayDebtSelect');
-        select.innerHTML = '<option value="">-- Selecciona una deuda --</option>';
-        state.debts.forEach(d => {
-            const pending = d.totalUSD - d.paidUSD;
-            if (pending > 0) {
-                const opt = document.createElement('option');
-                opt.value = d.id;
-                opt.innerText = `${d.name} (${formatCurr(pending)})`;
-                select.appendChild(opt);
-            }
-        });
-
-        document.getElementById('quickDebtSelectContainer').style.display = 'block';
-        document.getElementById('modalDebtTitle').innerText = `Registrar Abono Rápido`;
-        document.getElementById('modalDebtDetails').innerText = `Selecciona la deuda a abonar.`;
-        document.getElementById('payCurrency').value = 'USD';
-        document.getElementById('payAmount').value = '';
-        document.getElementById('payRef').value = '';
-        openModal('payModal');
-    }
-
-    function openPayModal(debtId) {
-        const debt = state.debts.find(d => d.id === debtId);
-        if (!debt) return;
-
-        const pendingUSD = debt.totalUSD - debt.paidUSD;
-        document.getElementById('modalDebtId').value = debt.id;
-        document.getElementById('quickDebtSelectContainer').style.display = 'none';
-        document.getElementById('modalDebtTitle').innerText = `Abonar a: ${debt.name}`;
-        document.getElementById('modalDebtDetails').innerText = `Pendiente: ${formatCurr(pendingUSD)} (${formatBs(pendingUSD)})`;
-        document.getElementById('payCurrency').value = 'USD';
-        document.getElementById('payAmount').value = '';
-        document.getElementById('payRef').value = '';
-        openModal('payModal');
-    }
-
-    function onQuickDebtSelected() {
-        const debtId = document.getElementById('quickPayDebtSelect').value;
-        const debt = state.debts.find(d => d.id === debtId);
-        if (debt) {
-            document.getElementById('modalDebtId').value = debt.id;
-            const pendingUSD = debt.totalUSD - debt.paidUSD;
-            document.getElementById('modalDebtDetails').innerText = `Pendiente: ${formatCurr(pendingUSD)} (${formatBs(pendingUSD)})`;
-        }
-    }
-
-    function fillFullPayment() {
-        const debtId = document.getElementById('modalDebtId').value || document.getElementById('quickPayDebtSelect').value;
-        const debt = state.debts.find(d => d.id === debtId);
-        if (debt) {
-            const pendingUSD = debt.totalUSD - debt.paidUSD;
-            const payCurr = document.getElementById('payCurrency').value;
-            document.getElementById('payAmount').value = convertFromUSD(pendingUSD, payCurr).toFixed(2);
-        }
-    }
-
-    function processPayment(e) {
-        e.preventDefault();
-        const debtId = document.getElementById('modalDebtId').value || document.getElementById('quickPayDebtSelect').value;
-        const rawAmount = parseFloat(document.getElementById('payAmount').value);
-        const payCurr = document.getElementById('payCurrency').value;
-        const ref = document.getElementById('payRef').value;
-
-        const debt = state.debts.find(d => d.id === debtId);
-        if (!debt) return;
-
-        const amountUSD = convertToUSD(rawAmount, payCurr);
-        debt.paidUSD += amountUSD;
-
-        state.history.push({
-            id: 'pay_' + Date.now(),
-            debtId: debt.id,
-            debtName: debt.name,
-            amountUSD: amountUSD,
-            ref: ref,
-            date: new Date().toISOString().split('T')[0]
-        });
-
-        const detailsEl = document.getElementById('details_' + debtId);
-        if (detailsEl) detailsEl.classList.add('hidden');
-
-        saveState();
-        closeModal('payModal');
-        alert('Pago registrado con éxito.');
-    }
-
-    function confirmDelete(type, id, name) {
-        const modal = document.getElementById('confirmModal');
-        const textEl = document.getElementById('confirmModalText');
-        textEl.innerText = `¿Deseas eliminar "${name}"? Esta acción no se puede deshacer.`;
-        
-        pendingDeleteAction = () => {
-            if (type === 'debt') {
-                state.debts = state.debts.filter(d => d.id !== id);
-            } else if (type === 'income') {
-                state.incomes = state.incomes.filter(i => i.id !== id);
-            } else if (type === 'history') {
-                state.history = state.history.filter(h => h.id !== id);
-            } else if (type === 'contact') {
-                state.contacts = state.contacts.filter(c => c.id_contact !== id);
-                renderContactsList();
-            }
-            saveState();
-            closeConfirmModal();
-        };
-
-        document.getElementById('confirmModalYesBtn').onclick = pendingDeleteAction;
-        modal.style.display = 'flex';
-    }
-
-    function confirmDeleteAllHistory() {
-        if (state.history.length === 0) {
-            alert('El historial ya está vacío.');
-            return;
-        }
-        const modal = document.getElementById('confirmModal');
-        const textEl = document.getElementById('confirmModalText');
-        textEl.innerText = `¿Deseas eliminar y limpiar TODO el historial de pagos en general?`;
-        
-        pendingDeleteAction = () => {
-            state.history = [];
-            saveState();
-            closeConfirmModal();
-        };
-
-        document.getElementById('confirmModalYesBtn').onclick = pendingDeleteAction;
-        modal.style.display = 'flex';
-    }
-
-    function closeConfirmModal() {
-        document.getElementById('confirmModal').style.display = 'none';
-        pendingDeleteAction = null;
-    }
-
-    function copyPaymentMobile(debtId) {
-        const debt = state.debts.find(d => d.id === debtId);
-        if (!debt || !debt.paymentMobile) return;
-
-        const pendingUSD = debt.totalUSD - debt.paidUSD;
-        const pendingBs = (pendingUSD * state.rateUSD).toFixed(2);
-
-        const text = `📌 PAGO MÓVIL (${debt.name})
-Monto: ${pendingBs} Bs
-Titular: ${debt.paymentMobile.name}
-Cédula: ${debt.paymentMobile.id}
-Teléfono: ${debt.paymentMobile.phone}
-Banco: ${debt.paymentMobile.bank}`;
-
-        navigator.clipboard.writeText(text).then(() => {
-            alert('Datos de Pago Móvil copiados.');
-        });
-    }
-
-    function exportCSV() {
-        let csv = "\uFEFFDeuda/Concepto,Monto Total (USD),Pagado (USD),Pendiente (USD),Abono Asociado,Fecha Limite\n";
-        state.debts.forEach(d => {
-            const pending = d.totalUSD - d.paidUSD;
-            csv += `"${d.name} - ${d.concept || ''}",${d.totalUSD.toFixed(2)},${d.paidUSD.toFixed(2)},${pending.toFixed(2)},"${d.cutoff}","${d.dueDate || 'Sin vencimiento'}"\n`;
-        });
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `DeudasPagas_Reporte_${new Date().toISOString().split('T')[0]}.csv`;
-        link.click();
-    }
-
-    function downloadJSONBackup() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
-        const link = document.createElement('a');
-        link.setAttribute("href", dataStr);
-        link.setAttribute("download", `DeudasPagas_Respaldo_${new Date().toISOString().split('T')[0]}.json`);
-        link.click();
-    }
-
-    function restoreJSONBackup(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            try {
-                const importedState = JSON.parse(evt.target.result);
-                if (importedState && importedState.debts) {
-                    state = importedState;
-                    saveState();
-                    alert('Respaldo restaurado.');
-                }
-            } catch (err) {
-                alert('Error al leer el archivo.');
-            }
-        };
-        reader.readAsText(file);
-    }
-</script>
-
-<!-- REGISTRO DEL SERVICE WORKER (OFFLINE AUTOMÁTICO) -->
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('Service Worker registrado correctamente.', reg))
-                .catch(err => console.log('Error al registrar Service Worker:', err));
-        });
-    }
-</script>
-
-</body>
-</html>
+                    <div style="width:100%; background:var(--border); height:6px; border-radius:3px; margin-top:4px; overflow:hid
