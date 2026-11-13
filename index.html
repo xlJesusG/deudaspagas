@@ -636,6 +636,7 @@
             padding: 5px 8px;
             font-size: 11px;
             font-weight: 800;
+            max-width: 170px;
         }
 
         .summary-mini {
@@ -688,6 +689,9 @@
             font-weight: 900;
             letter-spacing: 0.5px;
             color: var(--min-text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .sheet-table {
@@ -748,7 +752,7 @@
             padding: 5px 4px;
             font-size: 10px;
             font-weight: 900;
-            max-width: 70px;
+            max-width: 72px;
         }
 
         tr.is-paid {
@@ -1181,7 +1185,10 @@
 
             <!-- Tabla de Ingresos -->
             <div class="min-card income-card">
-                <div class="section-title">INGRESOS</div>
+                <div class="section-title">
+                    <span>INGRESOS</span>
+                    <span id="income-filter-badge" style="font-size: 9px; color: var(--min-accent-blue); font-weight: 800;"></span>
+                </div>
                 <table class="sheet-table">
                     <thead>
                         <tr>
@@ -1202,7 +1209,10 @@
 
             <!-- Tabla de Deudas -->
             <div class="min-card debt-card">
-                <div class="section-title">DEUDAS</div>
+                <div class="section-title">
+                    <span>DEUDAS</span>
+                    <span id="debt-filter-badge" style="font-size: 9px; color: var(--min-accent-blue); font-weight: 800;"></span>
+                </div>
                 <table class="sheet-table">
                     <thead>
                         <tr>
@@ -1235,8 +1245,8 @@
                 <button class="btn btn-outline btn-sm" onclick="closeSubModal('currencyHelpModal')">✕</button>
             </div>
             <div style="font-size:0.8rem; line-height:1.4; color:var(--text); display:flex; flex-direction:column; gap:8px;">
-                <p><b>🇻🇪 1 USD (Bs):</b> Configura cuántos bolívares cuesta exactamente 1 Dólar hoy.</p>
-                <p><b>🇺🇸 Base ($):</b> Unidad base de referencia.</p>
+                <p><b>🇻🇪 1 USD (Bs):</b> Configura cuántos bolívares cuesta exactamente 1 Dólar hoy. Puedes escribirla manualmente o tocar 🔄 para actualizarla.</p>
+                <p><b>🇺🇸 Base ($):</b> Unidad base de referencia para tus cálculos en dólares.</p>
                 <p><b>💶 Euros (€):</b> Muestra la proporción relativa del euro frente al dólar.</p>
                 <p><b>📝 Bloc Minimalista:</b> Toca el ícono de libreta en la barra superior para cambiar al modo tabla rápida tipo Excel.</p>
             </div>
@@ -1246,18 +1256,50 @@
     <div id="instructionsModal" class="modal-backdrop">
         <div class="modal">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
-                <h3 style="font-size:0.95rem; color:var(--primary);">📖 Manual Paso a Paso & Guía</h3>
+                <h3 style="font-size:0.95rem; color:var(--primary);">📖 Manual Paso a Paso & Guía Completa</h3>
                 <button class="btn btn-outline btn-sm" onclick="closeSubModal('instructionsModal')">✕</button>
             </div>
             <div style="font-size:0.8rem; line-height:1.45; color:var(--text); display:flex; flex-direction:column; gap:10px;">
-                <div style="background:var(--calc-bg); padding:8px 10px; border-radius:8px; border:1px solid var(--border);">
-                    <strong style="color:var(--primary);">📊 ¿Qué es cada sección?</strong><br>
-                    • <b>Dashboard:</b> Centro de control con balance neto, totales y progreso.<br>
-                    • <b>Deudas:</b> Lista de compromisos pendientes con saldos y Pago Móvil.<br>
-                    • <b>Ingresos:</b> Entradas de dinero como respaldo o abonos asociados.<br>
-                    • <b>Calculadora:</b> Herramienta numérica rápida.<br>
-                    • <b>Bloc Minimalista (📝):</b> Vista estilo hoja de cálculo para anotar ingresos y deudas rápido.
+                
+                <!-- Bloque 1: Qué es cada sección -->
+                <div style="background:var(--calc-bg); padding:10px; border-radius:8px; border:1px solid var(--border);">
+                    <strong style="color:var(--primary); font-size:0.85rem;">1️⃣ ¿Qué es cada sección de la App?</strong><br><br>
+                    • <b>📊 Dashboard:</b> Es tu tablero principal. Muestra tu Balance Neto Disponible (Ingresos menos Deudas Pendientes), equivalentes en Bolívares y barras de progreso de pago.<br>
+                    • <b>🔴 Deudas:</b> Lista detallada de todas tus deudas pendientes, fechas de vencimiento, fuente de pago asociada y datos de Pago Móvil.<br>
+                    • <b>🟢 Ingresos:</b> Registro de tus entradas de dinero (quincenas, bonos, pagos extras) con fecha de cobro.<br>
+                    • <b>🧮 Calculadora:</b> Calculadora rápida integrada para sacar cuentas sin salir de la aplicación.<br>
+                    • <b>📝 Bloc Financiero (Modo Minimalista):</b> Vista tipo hoja de cálculo (Excel) para anotar y tachar ingresos y deudas rápidamente por mes o por corte.<br>
+                    • <b>⚙️ Más...:</b> Contiene tu agenda de contactos, historial de deudas pagadas, historial de abonos, instalación PWA y respaldos.
                 </div>
+
+                <!-- Bloque 2: Cómo usar el Diseño Principal -->
+                <div style="background:var(--calc-bg); padding:10px; border-radius:8px; border:1px solid var(--border);">
+                    <strong style="color:var(--success); font-size:0.85rem;">2️⃣ Instrucciones: Diseño Principal</strong><br><br>
+                    • <b>Configurar la Tasa del Día:</b> En la barra superior escribe el valor del Dólar en Bs o presiona <b>🔄</b> para sincronizarlo automáticamente.<br>
+                    • <b>Registrar un Ingreso:</b> Ve a <i>Ingresos ➡️ ➕ Registrar Nuevo Ingreso</i>, coloca el concepto (Ej: Bono, Quincena), monto en $ o Bs y fecha.<br>
+                    • <b>Registrar una Deuda:</b> Toca <i>➕ Registrar Deuda</i>, ingresa acreedor, monto, con qué ingreso la vas a pagar y si deseas marca <i>"⚠️ Importante"</i>.<br>
+                    • <b>Pago Móvil Inteligente:</b> Dentro de una deuda marca <i>"Añadir datos de Pago Móvil"</i>. Puedes tocar <b>Pegar</b> para que la app detecte teléfono, cédula y banco automáticamente desde un mensaje copiado, o elegirlo desde tu agenda (<b>📇</b>).<br>
+                    • <b>Abonar o Pagar:</b> Toca cualquier deuda pendiente para desplegar sus opciones y presiona <b>💳 Pagar</b> (puedes abonar una parte o tocar <i>"Pagar Saldo Completo"</i>).
+                </div>
+
+                <!-- Bloque 3: Cómo usar el Bloc Minimalista -->
+                <div style="background:var(--calc-bg); padding:10px; border-radius:8px; border:1px solid var(--border);">
+                    <strong style="color:var(--primary-dark); font-size:0.85rem;">3️⃣ Instrucciones: Bloc Financiero (📝)</strong><br><br>
+                    • <b>Entrar y Salir:</b> Toca el ícono <b>📝</b> arriba a la derecha para abrir el Bloc. Para volver al diseño normal toca <b>"Salir minimalista"</b>. La app recordará automáticamente la última vista que usaste.<br>
+                    • <b>Navegar por Período:</b> Usa las flechas <b>&lt; &gt;</b> o los selectores de Mes y Año arriba para cambiar de mes.<br>
+                    • <b>Modo Mensual vs. Por Corte:</b><br>
+                      - En <b>Mensual</b> ves todos tus ingresos y deudas del mes juntos.<br>
+                      - En <b>Por Corte</b> eliges un ingreso específico arriba y tanto la tabla de Ingresos como la de Deudas filtrarán únicamente lo que pertenece a ese corte.<br>
+                    • <b>Respaldo "Ingreso General":</b> Si eliminas o cambias el nombre a un ingreso que tenía deudas asociadas, esas deudas <b>no se borran</b>; se mueven automáticamente a <b>"Ingreso General"</b> para que puedas verlas y reasignarlas cuando quieras.<br>
+                    • <b>Marcar como Listo (✓):</b> Toca el botón <b>✓</b> al lado de cada deuda para tacharla y enviarla al final de la lista.
+                </div>
+
+                <!-- Bloque 4: Respaldos -->
+                <div style="background:var(--calc-bg); padding:10px; border-radius:8px; border:1px solid var(--border);">
+                    <strong style="color:var(--warning); font-size:0.85rem;">4️⃣ Reportes y Copias de Seguridad</strong><br><br>
+                    • Tus datos se guardan localmente en tu teléfono. Te recomendamos ir periódicamente a <i>Más... ➡️ 💾 Descargar Respaldo JSON</i> para guardar una copia de seguridad o descargar tu reporte en Excel (CSV).
+                </div>
+
             </div>
         </div>
     </div>
@@ -2548,10 +2590,12 @@
 
     /* =========================================================
        LÓGICA DEL BLOQUE DE CÓDIGO MINIMALISTA
+       (Con respaldo automático a "Ingreso General" y filtro exacto)
        ========================================================= */
     let currentDate = new Date();
     let allData = JSON.parse(localStorage.getItem('deudasPagasData')) || {};
     let currentMode = 'mensual';
+    const FALLBACK_SOURCE = 'Ingreso General';
 
     function getMonthKey(date) {
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -2596,11 +2640,19 @@
         const incomeNames = allData[key].incomes.map(i => i.concept.trim()).filter(c => c.length > 0);
         const activeFilter = document.getElementById('active-income-filter').value;
         
-        const defaultSource = (currentMode === 'corte' && activeFilter) ? activeFilter : (incomeNames[0] || 'General');
-
         if (type === 'incomes') {
             allData[key].incomes.push({ concept: '', amount: 0, currency: '$' });
+            // Si estábamos filtrando por un corte y creamos un ingreso nuevo, pasamos brevemente a Mensual para que pueda escribirle el nombre cómodamente
+            if (currentMode === 'corte') {
+                currentMode = 'mensual';
+                document.getElementById('global-mode-select').value = 'mensual';
+                document.getElementById('active-income-filter').style.display = 'none';
+                showToast('Modo cambiado a Mensual para nombrar tu nuevo ingreso.');
+            }
         } else {
+            const defaultSource = (currentMode === 'corte' && activeFilter)
+                ? activeFilter
+                : (incomeNames[0] || FALLBACK_SOURCE);
             allData[key].debts.push({ concept: '', amount: 0, currency: '$', incomeSource: defaultSource, paid: false });
         }
         saveAndRenderMinimal();
@@ -2608,7 +2660,29 @@
 
     function removeItem(type, index) {
         const key = getMonthKey(currentDate);
-        allData[key][type].splice(index, 1);
+        initMonthData(key);
+
+        if (type === 'incomes') {
+            const deletedIncome = allData[key].incomes[index];
+            const deletedName = deletedIncome ? deletedIncome.concept.trim() : '';
+            allData[key].incomes.splice(index, 1);
+
+            // Reasignar deudas vinculadas al ingreso eliminado hacia "Ingreso General"
+            if (deletedName) {
+                let movedCount = 0;
+                allData[key].debts.forEach(d => {
+                    if ((d.incomeSource || '').trim() === deletedName) {
+                        d.incomeSource = FALLBACK_SOURCE;
+                        movedCount++;
+                    }
+                });
+                if (movedCount > 0) {
+                    showToast(`Deudas movidas a "${FALLBACK_SOURCE}"`);
+                }
+            }
+        } else {
+            allData[key][type].splice(index, 1);
+        }
         saveAndRenderMinimal();
     }
 
@@ -2625,6 +2699,27 @@
     function updateItem(type, index, field, value) {
         const key = getMonthKey(currentDate);
         initMonthData(key);
+
+        if (type === 'incomes' && field === 'concept') {
+            const oldName = (allData[key].incomes[index].concept || '').trim();
+            const newName = value.trim();
+            allData[key].incomes[index].concept = value;
+
+            // Sincronizar en tiempo real las deudas vinculadas a este ingreso
+            if (oldName && oldName !== newName) {
+                allData[key].debts.forEach(d => {
+                    if ((d.incomeSource || '').trim() === oldName) {
+                        d.incomeSource = newName || FALLBACK_SOURCE;
+                    }
+                });
+            }
+            saveDataOnlyMinimal();
+            updateIncomeSelectorsOnlyMinimal(newName);
+            updateDebtRowSourceSelects();
+            calculateTotalsMinimal();
+            return;
+        }
+
         if (field === 'amount') {
             allData[key][type][index][field] = parseFloat(value) || 0;
         } else {
@@ -2632,10 +2727,6 @@
         }
         saveDataOnlyMinimal();
         calculateTotalsMinimal();
-        
-        if (type === 'incomes' && field === 'concept') {
-            updateIncomeSelectorsOnlyMinimal();
-        }
     }
 
     function saveDataOnlyMinimal() {
@@ -2651,11 +2742,17 @@
         return `$${usd.toFixed(2)} | Bs ${bs.toLocaleString('es-VE', {minimumFractionDigits: 0, maximumFractionDigits: 2})}`;
     }
 
+    function getAvailableSourceOptions(monthData) {
+        const incomeNames = monthData.incomes.map(i => (i.concept || '').trim()).filter(c => c.length > 0);
+        const uniqueSources = Array.from(new Set([...incomeNames, FALLBACK_SOURCE]));
+        return uniqueSources;
+    }
+
     function calculateTotalsMinimal() {
         const key = getMonthKey(currentDate);
         initMonthData(key);
         const monthData = allData[key];
-        const activeIncomeFilter = document.getElementById('active-income-filter').value;
+        const activeIncomeFilter = (document.getElementById('active-income-filter').value || '').trim();
 
         let incUSD = 0, incBs = 0;
         let debtUSD = 0, debtBs = 0;
@@ -2671,13 +2768,14 @@
             });
         } else {
             monthData.incomes.forEach(item => {
-                if (item.concept === activeIncomeFilter) {
+                if ((item.concept || '').trim() === activeIncomeFilter) {
                     if (item.currency === '$') incUSD += item.amount;
                     else incBs += item.amount;
                 }
             });
             monthData.debts.forEach(item => {
-                if (item.incomeSource === activeIncomeFilter) {
+                const src = (item.incomeSource || '').trim() || FALLBACK_SOURCE;
+                if (src === activeIncomeFilter) {
                     if (item.currency === '$') debtUSD += item.amount;
                     else debtBs += item.amount;
                 }
@@ -2702,27 +2800,43 @@
         }
     }
 
-    function updateIncomeSelectorsOnlyMinimal() {
+    function updateIncomeSelectorsOnlyMinimal(preferredSelection = '') {
         const key = getMonthKey(currentDate);
         initMonthData(key);
         const monthData = allData[key];
-        const incomeNames = monthData.incomes.map(i => i.concept.trim()).filter(c => c.length > 0);
+        const sources = getAvailableSourceOptions(monthData);
         
         const incomeFilterSelect = document.getElementById('active-income-filter');
-        const previousFilter = incomeFilterSelect.value;
+        const previousFilter = preferredSelection || incomeFilterSelect.value;
         incomeFilterSelect.innerHTML = '';
         
-        if (incomeNames.length === 0) {
-            incomeFilterSelect.innerHTML = '<option value="">(Sin ingresos)</option>';
-        } else {
-            incomeNames.forEach(name => {
+        sources.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.innerText = name;
+            if (name === previousFilter) opt.selected = true;
+            incomeFilterSelect.appendChild(opt);
+        });
+    }
+
+    function updateDebtRowSourceSelects() {
+        const key = getMonthKey(currentDate);
+        initMonthData(key);
+        const monthData = allData[key];
+        const sources = getAvailableSourceOptions(monthData);
+
+        document.querySelectorAll('.mini-source-select').forEach(sel => {
+            const rowIdx = parseInt(sel.getAttribute('data-debt-index'));
+            const currentSrc = (monthData.debts[rowIdx]?.incomeSource || '').trim() || FALLBACK_SOURCE;
+            sel.innerHTML = '';
+            sources.forEach(name => {
                 const opt = document.createElement('option');
                 opt.value = name;
                 opt.innerText = name;
-                if (name === previousFilter) opt.selected = true;
-                incomeFilterSelect.appendChild(opt);
+                if (name === currentSrc) opt.selected = true;
+                sel.appendChild(opt);
             });
-        }
+        });
     }
 
     function renderMinimal() {
@@ -2730,23 +2844,50 @@
         initMonthData(key);
         const monthData = allData[key];
 
+        // Normalizar fuentes huérfanas antiguas hacia "Ingreso General"
+        const validIncomeNames = monthData.incomes.map(i => (i.concept || '').trim()).filter(c => c.length > 0);
+        let needsSave = false;
+        monthData.debts.forEach(d => {
+            const src = (d.incomeSource || '').trim();
+            if (!src || src === 'General' || (!validIncomeNames.includes(src) && src !== FALLBACK_SOURCE)) {
+                d.incomeSource = FALLBACK_SOURCE;
+                needsSave = true;
+            }
+        });
+        if (needsSave) saveDataOnlyMinimal();
+
         document.getElementById('select-month').value = currentDate.getMonth();
         document.getElementById('select-year').value = currentDate.getFullYear();
 
         updateIncomeSelectorsOnlyMinimal();
-        const activeIncomeFilter = document.getElementById('active-income-filter').value;
+        const activeIncomeFilter = (document.getElementById('active-income-filter').value || '').trim();
+
+        const incBadge = document.getElementById('income-filter-badge');
+        const debtBadge = document.getElementById('debt-filter-badge');
+        if (currentMode === 'corte') {
+            incBadge.innerText = `Filtro: ${activeIncomeFilter}`;
+            debtBadge.innerText = `Filtro: ${activeIncomeFilter}`;
+        } else {
+            incBadge.innerText = 'Todos del mes';
+            debtBadge.innerText = 'Todas del mes';
+        }
 
         const sourceHeaders = document.querySelectorAll('.debt-source-header');
         sourceHeaders.forEach(th => {
             th.style.display = currentMode === 'corte' ? '' : 'none';
         });
 
-        const incomeNames = monthData.incomes.map(i => i.concept.trim()).filter(c => c.length > 0);
+        const sources = getAvailableSourceOptions(monthData);
 
-        // Renderizar Ingresos
+        // Renderizar Ingresos (filtrando también si está en modo "Por Corte")
         const incTbody = document.getElementById('incomes-tbody');
         incTbody.innerHTML = '';
+        let visibleIncomesCount = 0;
+
         monthData.incomes.forEach((item, index) => {
+            if (currentMode === 'corte' && (item.concept || '').trim() !== activeIncomeFilter) return;
+            visibleIncomesCount++;
+
             incTbody.innerHTML += `
                 <tr>
                     <td><input type="text" class="sheet-input" value="${item.concept}" placeholder="Concepto" oninput="updateItem('incomes', ${index}, 'concept', this.value)"></td>
@@ -2762,20 +2903,24 @@
             `;
         });
 
+        if (visibleIncomesCount === 0 && currentMode === 'corte') {
+            incTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; font-size:11px; color:var(--min-text-secondary); padding:10px;">Sin ingreso específico en "${activeIncomeFilter}"</td></tr>`;
+        }
+
         // Renderizar Deudas
         const debtTbody = document.getElementById('debts-tbody');
         debtTbody.innerHTML = '';
+        let visibleDebtsCount = 0;
+
         monthData.debts.forEach((item, index) => {
-            if (currentMode === 'corte' && item.incomeSource !== activeIncomeFilter) return;
+            const itemSource = (item.incomeSource || '').trim() || FALLBACK_SOURCE;
+            if (currentMode === 'corte' && itemSource !== activeIncomeFilter) return;
+            visibleDebtsCount++;
 
             let incomeOptions = '';
-            if (incomeNames.length === 0) {
-                incomeOptions = `<option value="">---</option>`;
-            } else {
-                incomeNames.forEach(name => {
-                    incomeOptions += `<option value="${name}" ${item.incomeSource === name ? 'selected' : ''}>${name}</option>`;
-                });
-            }
+            sources.forEach(name => {
+                incomeOptions += `<option value="${name}" ${itemSource === name ? 'selected' : ''}>${name}</option>`;
+            });
 
             const paidClass = item.paid ? 'is-paid' : '';
             debtTbody.innerHTML += `
@@ -2789,7 +2934,7 @@
                         </select>
                     </td>
                     <td style="display: ${currentMode === 'corte' ? '' : 'none'};">
-                        <select class="mini-source-select" onchange="updateItem('debts', ${index}, 'incomeSource', this.value)">
+                        <select class="mini-source-select" data-debt-index="${index}" onchange="updateItem('debts', ${index}, 'incomeSource', this.value)">
                             ${incomeOptions}
                         </select>
                     </td>
@@ -2798,6 +2943,10 @@
                 </tr>
             `;
         });
+
+        if (visibleDebtsCount === 0 && currentMode === 'corte') {
+            debtTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; font-size:11px; color:var(--min-text-secondary); padding:10px;">No hay deudas en "${activeIncomeFilter}"</td></tr>`;
+        }
 
         calculateTotalsMinimal();
     }
